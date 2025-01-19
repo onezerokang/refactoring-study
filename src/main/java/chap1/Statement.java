@@ -20,13 +20,18 @@ public class Statement {
             // 청구 내역을 출력한다.
             result.append(" %s: %s (%d석)\n".formatted(playFor(perf).name(), usd(amountFor(perf)), perf.audience()));
         }
+        int totalAmount = appleSauce();
+        result.append("총액: %s\n".formatted(usd(totalAmount)));
+        result.append("적립 포인트: %d점\n".formatted(totalVolumeCredits()));
+        return result.toString();
+    }
+
+    private int appleSauce() {
         int totalAmount = 0;
         for (final Performance perf : invoice.performances()) {
             totalAmount += amountFor(perf);
         }
-        result.append("총액: %s\n".formatted(usd(totalAmount)));
-        result.append("적립 포인트: %d점\n".formatted(totalVolumeCredits()));
-        return result.toString();
+        return totalAmount;
     }
 
     private int totalVolumeCredits() {
