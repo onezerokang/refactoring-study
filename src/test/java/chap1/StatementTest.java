@@ -39,7 +39,7 @@ class StatementTest {
             @Nested
             class Context_with_audience_under_30 {
 
-                @DisplayName("40000원의 기본 요금이 부과되고, 포인트는 적립되지 않는다.")
+                @DisplayName("$400.00의 기본 요금이 부과되고, 포인트는 적립되지 않는다.")
                 @Test
                 void it() {
                     final Invoice invoice = new Invoice(
@@ -52,8 +52,8 @@ class StatementTest {
 
                     assertThat(result).isEqualTo("""
                             청구 내역 (고객명: test-customer)
-                             Hamlet: 40000 (30석)
-                            총액: 40000
+                             Hamlet: $400.00 (30석)
+                            총액: $400.00
                             적립 포인트: 0점
                             """);
                 }
@@ -63,7 +63,7 @@ class StatementTest {
             @Nested
             class Context_with_audience_over_30 {
 
-                @DisplayName("40000만원의 기본 요금에 초과 인원 1명당 1000원이 부과되고, 포인트는 초과인원수 만큼 적립된다.")
+                @DisplayName("$400.00의 기본 요금에 초과 인원 1명당 $10.00가 부과되고, 포인트는 초과인원수 만큼 적립된다.")
                 @Test
                 void it() {
                     final Invoice invoice = new Invoice(
@@ -76,8 +76,8 @@ class StatementTest {
 
                     assertThat(result).isEqualTo("""
                             청구 내역 (고객명: test-customer)
-                             Hamlet: 41000 (31석)
-                            총액: 41000
+                             Hamlet: $410.00 (31석)
+                            총액: $410.00
                             적립 포인트: 1점
                             """);
                 }
@@ -91,7 +91,7 @@ class StatementTest {
             @DisplayName("관객이 20명 이하일 경우")
             @Nested
             class Context_with_audience_under_20 {
-                @DisplayName("기본 요금(30000 + 300 * 관객수)이 부과되고, 포인트는 (관객수 / 5)만큼 적립된다.")
+                @DisplayName("기본 요금($300.00 + $3.00 * 관객수)이 부과되고, 포인트는 (관객수 / 5)만큼 적립된다.")
                 @Test
                 void it() {
                     final Invoice invoice = new Invoice(
@@ -104,8 +104,8 @@ class StatementTest {
 
                     assertThat(result).isEqualTo("""
                         청구 내역 (고객명: test-customer)
-                         As You Like It: 36000 (20석)
-                        총액: 36000
+                         As You Like It: $360.00 (20석)
+                        총액: $360.00
                         적립 포인트: 4점
                         """);
                 }
@@ -113,7 +113,7 @@ class StatementTest {
             @DisplayName("관객이 20명 초과일 경우")
             @Nested
             class Context_with_audience_over_20 {
-                @DisplayName("기본 요금(30000 + 300 * 관객수)에 초과 요금(10000 + 500 * 초과인원수), 포인트는 (관객수 / 5)만큼 적립된다.")
+                @DisplayName("기본 요금($300.00 + $3.00 * 관객수)에 초과 요금($100.00 + $5.00 * 초과인원수), 포인트는 (관객수 / 5)만큼 적립된다.")
                 @Test
                 void it() {
                     final Invoice invoice = new Invoice(
@@ -126,8 +126,8 @@ class StatementTest {
 
                     assertThat(result).isEqualTo("""
                         청구 내역 (고객명: test-customer)
-                         As You Like It: 46800 (21석)
-                        총액: 46800
+                         As You Like It: $468.00 (21석)
+                        총액: $468.00
                         적립 포인트: 4점
                         """);
                 }

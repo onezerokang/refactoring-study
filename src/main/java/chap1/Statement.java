@@ -1,5 +1,8 @@
 package chap1;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class Statement {
 
     private final Invoice invoice;
@@ -14,15 +17,16 @@ public class Statement {
         int totalAmount = 0;
         int volumeCredits = 0;
         final StringBuilder result = new StringBuilder("청구 내역 (고객명: %s)\n".formatted(invoice.customer()));
+        final NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
 
         for (final Performance perf : invoice.performances()) {
             volumeCredits += volumeCreditsFor(perf);
 
             // 청구 내역을 출력한다.
-            result.append(" %s: %d (%d석)\n".formatted(playFor(perf).name(), amountFor(perf), perf.audience()));
+            result.append(" %s: %s (%d석)\n".formatted(playFor(perf).name(), format.format(amountFor(perf) / 100), perf.audience()));
             totalAmount += amountFor(perf);
         }
-        result.append("총액: %d\n".formatted(totalAmount));
+        result.append("총액: %s\n".formatted(format.format(totalAmount / 100)));
         result.append("적립 포인트: %d점\n".formatted(volumeCredits));
         return result.toString();
     }
