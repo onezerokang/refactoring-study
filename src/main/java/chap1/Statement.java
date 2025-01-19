@@ -19,11 +19,12 @@ public class Statement {
         final StringBuilder result = new StringBuilder("청구 내역 (고객명: %s)\n".formatted(invoice.customer()));
 
         for (final Performance perf : invoice.performances()) {
-            volumeCredits += volumeCreditsFor(perf);
-
             // 청구 내역을 출력한다.
             result.append(" %s: %s (%d석)\n".formatted(playFor(perf).name(), usd(amountFor(perf)), perf.audience()));
             totalAmount += amountFor(perf);
+        }
+        for (final Performance perf : invoice.performances()) {
+            volumeCredits += volumeCreditsFor(perf);
         }
         result.append("총액: %s\n".formatted(usd(totalAmount)));
         result.append("적립 포인트: %d점\n".formatted(volumeCredits));
