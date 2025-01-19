@@ -27,13 +27,13 @@ public class Statement {
         return result.toString();
     }
 
-    private int volumeCreditsFor(final Performance perf) {
-        int volumeCredits = 0;
-        volumeCredits += Math.max(perf.audience() - 30, 0);
-        if ("comedy".equals(playFor(perf).type())) {
-            volumeCredits += perf.audience() / 5;
+    private int volumeCreditsFor(final Performance aPerformance) {
+        int result = 0;
+        result += Math.max(aPerformance.audience() - 30, 0);
+        if ("comedy".equals(playFor(aPerformance).type())) {
+            result += aPerformance.audience() / 5;
         }
-        return volumeCredits;
+        return result;
     }
 
     private Play playFor(final Performance perf) {
