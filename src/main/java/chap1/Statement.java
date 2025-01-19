@@ -16,7 +16,7 @@ public class Statement {
         final StringBuilder result = new StringBuilder("청구 내역 (고객명: %s)\n".formatted(invoice.customer()));
 
         for (final Performance perf : invoice.performances()) {
-            int thisAmount = amountFor(perf, playFor(perf));
+            int thisAmount = amountFor(perf);
             // 포인트를 적립한다.
             volumeCredits += Math.max(perf.audience() - 30, 0);
             // 희극 관객 5명마다 추가 포인트를 제공한다.
@@ -37,9 +37,9 @@ public class Statement {
         return plays.getPlay(perf.playId());
     }
 
-    private int amountFor(final Performance aPerformance, final Play play) {
+    private int amountFor(final Performance aPerformance) {
         int result = 0;
-        switch (play.type()) {
+        switch (playFor(aPerformance).type()) {
             case "tragedy": // 비극
                 result = 40000;
                 if (aPerformance.audience() > 30) {
@@ -54,7 +54,7 @@ public class Statement {
                 result += 300 * aPerformance.audience();
                 break;
             default:
-                throw new IllegalStateException("알 수 없는 장르: %s".formatted(play.type()));
+                throw new IllegalStateException("알 수 없는 장르: %s".formatted(playFor(aPerformance).type()));
         }
         return result;
     }
