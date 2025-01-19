@@ -22,9 +22,8 @@ public class Statement {
             result.append(" %s: %s (%d석)\n".formatted(playFor(perf).name(), usd(amountFor(perf)), perf.audience()));
             totalAmount += amountFor(perf);
         }
-        int volumeCredits = totalVolumeCredits();
         result.append("총액: %s\n".formatted(usd(totalAmount)));
-        result.append("적립 포인트: %d점\n".formatted(volumeCredits));
+        result.append("적립 포인트: %d점\n".formatted(totalVolumeCredits()));
         return result.toString();
     }
 
