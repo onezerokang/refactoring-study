@@ -20,6 +20,8 @@ public class Statement {
         for (final Performance perf : invoice.performances()) {
             // 청구 내역을 출력한다.
             result.append(" %s: %s (%d석)\n".formatted(playFor(perf).name(), usd(amountFor(perf)), perf.audience()));
+        }
+        for (final Performance perf : invoice.performances()) {
             totalAmount += amountFor(perf);
         }
         result.append("총액: %s\n".formatted(usd(totalAmount)));
