@@ -16,17 +16,16 @@ public class Statement {
         final StringBuilder result = new StringBuilder("청구 내역 (고객명: %s)\n".formatted(invoice.customer()));
 
         for (final Performance perf : invoice.performances()) {
-            final Play play = playFor(perf);
-            int thisAmount = amountFor(perf, play);
+            int thisAmount = amountFor(perf, playFor(perf));
             // 포인트를 적립한다.
             volumeCredits += Math.max(perf.audience() - 30, 0);
             // 희극 관객 5명마다 추가 포인트를 제공한다.
-            if ("comedy".equals(play.type())) {
+            if ("comedy".equals(playFor(perf).type())) {
                 volumeCredits += perf.audience() / 5;
             }
 
             // 청구 내역을 출력한다.
-            result.append(" %s: %d (%d석)\n".formatted(play.name(), thisAmount, perf.audience()));
+            result.append(" %s: %d (%d석)\n".formatted(playFor(perf).name(), thisAmount, perf.audience()));
             totalAmount += thisAmount;
         }
         result.append("총액: %d\n".formatted(totalAmount));
