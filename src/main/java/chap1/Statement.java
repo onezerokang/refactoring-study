@@ -17,25 +17,7 @@ public class Statement {
 
         for (final Performance perf : invoice.performances()) {
             final Play play = plays.getPlay(perf.playId());
-            int thisAmount = 0;
-
-            switch (play.type()) {
-                case "tragedy": // 비극
-                    thisAmount = 40000;
-                    if (perf.audience() > 30) {
-                        thisAmount += 1000 * (perf.audience() - 30);
-                    }
-                    break;
-                case "comedy": // 희극
-                    thisAmount = 30000;
-                    if (perf.audience() > 20) {
-                        thisAmount += 10000 + 500 * (perf.audience() - 20);
-                    }
-                    thisAmount += 300 * perf.audience();
-                    break;
-                default:
-                    throw new IllegalStateException("알 수 없는 장르: %s".formatted(play.type()));
-            }
+            int thisAmount = amountFor(perf, play);
             // 포인트를 적립한다.
             volumeCredits += Math.max(perf.audience() - 30, 0);
             // 희극 관객 5명마다 추가 포인트를 제공한다.
@@ -50,5 +32,27 @@ public class Statement {
         result.append("총액: %d\n".formatted(totalAmount));
         result.append("적립 포인트: %d점\n".formatted(volumeCredits));
         return result.toString();
+    }
+
+    private int amountFor(final Performance perf, final Play play) {
+        int thisAmount = 0;
+        switch (play.type()) {
+            case "tragedy": // 비극
+                thisAmount = 40000;
+                if (perf.audience() > 30) {
+                    thisAmount += 1000 * (perf.audience() - 30);
+                }
+                break;
+            case "comedy": // 희극
+                thisAmount = 30000;
+                if (perf.audience() > 20) {
+                    thisAmount += 10000 + 500 * (perf.audience() - 20);
+                }
+                thisAmount += 300 * perf.audience();
+                break;
+            default:
+                throw new IllegalStateException("알 수 없는 장르: %s".formatted(play.type()));
+        }
+        return thisAmount;
     }
 }
