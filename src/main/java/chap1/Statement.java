@@ -17,18 +17,21 @@ public class Statement {
         int totalAmount = 0;
         int volumeCredits = 0;
         final StringBuilder result = new StringBuilder("청구 내역 (고객명: %s)\n".formatted(invoice.customer()));
-        final NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
 
         for (final Performance perf : invoice.performances()) {
             volumeCredits += volumeCreditsFor(perf);
 
             // 청구 내역을 출력한다.
-            result.append(" %s: %s (%d석)\n".formatted(playFor(perf).name(), format.format(amountFor(perf) / 100), perf.audience()));
+            result.append(" %s: %s (%d석)\n".formatted(playFor(perf).name(), format(amountFor(perf) / 100), perf.audience()));
             totalAmount += amountFor(perf);
         }
-        result.append("총액: %s\n".formatted(format.format(totalAmount / 100)));
+        result.append("총액: %s\n".formatted(format(totalAmount / 100)));
         result.append("적립 포인트: %d점\n".formatted(volumeCredits));
         return result.toString();
+    }
+
+    private static String format(final int aNumber) {
+        return NumberFormat.getCurrencyInstance(Locale.US).format(aNumber);
     }
 
     private int volumeCreditsFor(final Performance aPerformance) {
