@@ -34,11 +34,11 @@ public class Statement {
     }
 
     private int totalVolumeCredits() {
-        int volumeCredits = 0;
+        int result = 0;
         for (final Performance perf : invoice.performances()) {
-            volumeCredits += volumeCreditsFor(perf);
+            result += volumeCreditsFor(perf);
         }
-        return volumeCredits;
+        return result;
     }
 
     private static String usd(final int aNumber) {
