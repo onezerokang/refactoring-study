@@ -10,14 +10,18 @@ public class StatementData {
 
     public StatementData(final Invoice invoice, final Plays plays) {
         this.customer = invoice.customer();
-        this.performances.addAll(enrichPerformance(invoice.performances()));
         this.plays = plays;
+        this.performances.addAll(enrichPerformance(invoice.performances()));
     }
 
-    private static List<EnrichedPerformance> enrichPerformance(final List<Performance> performances) {
+    private List<EnrichedPerformance> enrichPerformance(final List<Performance> performances) {
         return performances.stream()
-                .map(p -> new EnrichedPerformance(p.playId(), p.audience()))
+                .map(p -> new EnrichedPerformance(p.playId(), p.audience(), playFor(p)))
                 .toList();
+    }
+
+    private Play playFor(final Performance perf) {
+        return plays.getPlay(perf.playId());
     }
 
     public String getCustomer() {
