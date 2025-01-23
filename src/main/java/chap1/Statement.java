@@ -14,7 +14,7 @@ public class Statement {
     }
 
     public String statement() {
-        final StatementData statementData = new StatementData(invoice.customer(), invoice.performances());
+        final StatementData statementData = new StatementData(invoice);
         return renderPlainText(statementData);
     }
 

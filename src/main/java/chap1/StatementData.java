@@ -7,9 +7,9 @@ public class StatementData {
     private final String customer;
     private final List<Performance> performances = new ArrayList<>();
 
-    public StatementData(final String customer, final List<Performance> performances) {
-        this.customer = customer;
-        this.performances.addAll(enrichPerformance(performances));
+    public StatementData(final Invoice invoice) {
+        this.customer = invoice.customer();
+        this.performances.addAll(enrichPerformance(invoice.performances()));
     }
 
     private static List<Performance> enrichPerformance(final List<Performance> performances) {
