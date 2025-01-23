@@ -14,12 +14,12 @@ public class Statement {
     }
 
     public String statement() {
-        final StatementData statementData = new StatementData();
+        final StatementData statementData = new StatementData(invoice.customer());
         return renderPlainText(statementData);
     }
 
     private String renderPlainText(final StatementData data) {
-        final StringBuilder result = new StringBuilder("청구 내역 (고객명: %s)\n".formatted(invoice.customer()));
+        final StringBuilder result = new StringBuilder("청구 내역 (고객명: %s)\n".formatted(data.getCustomer()));
 
         for (final Performance perf : invoice.performances()) {
             // 청구 내역을 출력한다.
