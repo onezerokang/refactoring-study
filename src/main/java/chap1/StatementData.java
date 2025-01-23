@@ -5,7 +5,7 @@ import java.util.List;
 
 public class StatementData {
     private final String customer;
-    private final List<Performance> performances = new ArrayList<>();
+    private final List<EnrichedPerformance> performances = new ArrayList<>();
     private final Plays plays;
 
     public StatementData(final Invoice invoice, final Plays plays) {
@@ -14,9 +14,9 @@ public class StatementData {
         this.plays = plays;
     }
 
-    private static List<Performance> enrichPerformance(final List<Performance> performances) {
+    private static List<EnrichedPerformance> enrichPerformance(final List<Performance> performances) {
         return performances.stream()
-                .map(p -> new Performance(p.playId(), p.audience()))
+                .map(p -> new EnrichedPerformance(p.playId(), p.audience()))
                 .toList();
     }
 
@@ -25,6 +25,8 @@ public class StatementData {
     }
 
     public List<Performance> getPerformances() {
-        return performances;
+        return this.performances.stream()
+                .map(ep -> new Performance(ep.getPlayId(), ep.getAudience()))
+                .toList();
     }
 }
