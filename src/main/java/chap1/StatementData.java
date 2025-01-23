@@ -16,7 +16,7 @@ public class StatementData {
 
     private List<EnrichedPerformance> enrichPerformance(final List<Performance> performances) {
         return performances.stream()
-                .map(p -> new EnrichedPerformance(p.playId(), p.audience(), playFor(p), amountFor(p)))
+                .map(p -> new EnrichedPerformance(p.playId(), p.audience(), playFor(p), amountFor(p), volumeCreditsFor(p)))
                 .toList();
     }
 
@@ -42,6 +42,15 @@ public class StatementData {
                 break;
             default:
                 throw new IllegalStateException("알 수 없는 장르: %s".formatted(playFor(aPerformance).type()));
+        }
+        return result;
+    }
+
+    private int volumeCreditsFor(final Performance aPerformance) {
+        int result = 0;
+        result += Math.max(aPerformance.audience() - 30, 0);
+        if ("comedy".equals(playFor(aPerformance).type())) {
+            result += aPerformance.audience() / 5;
         }
         return result;
     }
