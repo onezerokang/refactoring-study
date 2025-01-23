@@ -32,4 +32,8 @@ public class EnrichedPerformance {
     public int getAmount() {
         return amount;
     }
+
+    public int getVolumeCredits() {
+        return volumeCredits;
+    }
 }
