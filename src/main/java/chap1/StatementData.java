@@ -7,11 +7,13 @@ public class StatementData {
     private final String customer;
     private final List<EnrichedPerformance> performances = new ArrayList<>();
     private final Plays plays;
+    private final int totalAmount;
 
     public StatementData(final Invoice invoice, final Plays plays) {
         this.customer = invoice.customer();
         this.plays = plays;
         this.performances.addAll(enrichPerformance(invoice.performances()));
+        this.totalAmount = totalAmount(this.performances);
     }
 
     private List<EnrichedPerformance> enrichPerformance(final List<Performance> performances) {
@@ -53,6 +55,10 @@ public class StatementData {
             result += aPerformance.audience() / 5;
         }
         return result;
+    }
+
+    private int totalAmount(final List<EnrichedPerformance> performances) {
+        return performances.stream().mapToInt(EnrichedPerformance::getAmount).sum();
     }
 
     public String getCustomer() {
