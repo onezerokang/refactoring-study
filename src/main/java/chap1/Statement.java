@@ -14,14 +14,14 @@ public class Statement {
     }
 
     public String statement() {
-        final StatementData statementData = new StatementData(invoice.customer());
+        final StatementData statementData = new StatementData(invoice.customer(), invoice.performances());
         return renderPlainText(statementData);
     }
 
     private String renderPlainText(final StatementData data) {
         final StringBuilder result = new StringBuilder("청구 내역 (고객명: %s)\n".formatted(data.getCustomer()));
 
-        for (final Performance perf : invoice.performances()) {
+        for (final Performance perf : data.getPerformances()) {
             // 청구 내역을 출력한다.
             result.append(" %s: %s (%d석)\n".formatted(playFor(perf).name(), usd(amountFor(perf)), perf.audience()));
         }
