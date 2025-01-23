@@ -71,9 +71,15 @@ public class StatementData {
         return customer;
     }
 
-    public List<Performance> getPerformances() {
-        return this.performances.stream()
-                .map(ep -> new Performance(ep.getPlayId(), ep.getAudience()))
-                .toList();
+    public List<EnrichedPerformance> getPerformances() {
+        return performances;
+    }
+
+    public int getTotalAmount() {
+        return totalAmount;
+    }
+
+    public int getTotalVolumeCredits() {
+        return totalVolumeCredits;
     }
 }

@@ -29,6 +29,10 @@ public class EnrichedPerformance {
         return audience;
     }
 
+    public Play getPlay() {
+        return play;
+    }
+
     public int getAmount() {
         return amount;
     }
